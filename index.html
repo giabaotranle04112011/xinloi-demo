@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xin Lỗi Huỳnh Linh</title>
+  <style>
+    body {
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      background: linear-gradient(-45deg, #f9d5ec, #f0f8ff, #ffe4e1, #ffdee9);
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+      overflow: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .container {
+      background-color: #ffffffd9;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(255,0,100,0.3);
+      max-width: 600px;
+      animation: popIn 1s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes popIn {
+      from {transform: scale(0.5); opacity: 0;}
+      to {transform: scale(1); opacity: 1;}
+    }
+
+    h1 {
+      color: #ff4fa0;
+      font-size: 2.7em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #ffb6c1;
+      animation: fadeIn 2s ease;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #ff69b4;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.3s;
+    }
+    button:hover {
+      background-color: #ff1493;
+      transform: scale(1.1) rotate(-2deg);
+    }
+
+    .apology {
+      display: none;
+      font-size: 1.3em;
+      color: #d63384;
+      font-weight: bold;
+      margin-top: 20px;
+      text-align: left;
+      min-height: 120px;
+      white-space: pre-line;
+      line-height: 1.6em;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff99cc; }
+      to   { text-shadow: 0 0 20px #ff4fa0, 0 0 30px #ff66b2; }
+    }
+
+    .emoji {
+      font-size: 2em;
+      margin-top: 15px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0);}
+      50% { transform: translateY(-10px);}
+    }
+
+    .falling {
+      position: absolute;
+      top: -50px;
+      font-size: 1.8em;
+      animation: fall linear forwards;
+      z-index: 1;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Pháo hoa */
+    .firework {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: gold;
+      border-radius: 50%;
+      animation: explode 1s ease-out forwards;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    @keyframes explode {
+      from { transform: scale(1); opacity: 1; }
+      to { transform: scale(0); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Xin Lỗi Huỳnh Linh 😅</h1>
+    <p>Mình lỡ chụp hình dìm bạn rồi 😭 Bấm nút bên dưới để nhận lời xin lỗi chân thành nha! 🥺</p>
+    <button id="apologyBtn" onclick="showApology()">👉 Xem Lời Xin Lỗi 👈</button>
+    <div id="apologyMessage" class="apology"></div>
+    <div class="emoji">😊🙏</div>
+  </div>
+
+  <!-- Nhạc nền -->
+  <audio id="bgm" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8c4df6f0b2.mp3?filename=romantic-112941.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function typeWriter(text, element, speed = 50) {
+      let i = 0;
+      function typing() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typing, speed);
+        }
+      }
+      typing();
+    }
+
+    function createFirework(x, y) {
+      for (let i = 0; i < 30; i++) {
+        let fire = document.createElement("div");
+        fire.className = "firework";
+        fire.style.left = x + "px";
+        fire.style.top = y + "px";
+        fire.style.background = `hsl(${Math.random()*360}, 100%, 60%)`;
+        document.body.appendChild(fire);
+
+        let angle = Math.random() * 2 * Math.PI;
+        let radius = Math.random() * 100 + 50;
+        fire.animate([
+          { transform: `translate(0,0)`, opacity: 1 },
+          { transform: `translate(${Math.cos(angle)*radius}px, ${Math.sin(angle)*radius}px)`, opacity: 0 }
+        ], { duration: 1000, easing: "ease-out" });
+
+        setTimeout(()=>fire.remove(),1000);
+      }
+    }
+
+    function showApology() {
+      const apology = document.getElementById('apologyMessage');
+      const button = document.getElementById('apologyBtn');
+      const bgm = document.getElementById("bgm");
+      button.style.display = "none";
+      apology.style.display = "block";
+      bgm.play();
+
+      const message = "Huỳnh Linh ơi, mình thật sự xin lỗi vì đã chụp ảnh dìm bạn nha!\nMình hứa sẽ chụp lại một bức thật xinh để bù lại nè 🥰\nTha thứ cho mình đi, bạn dễ thương nhất luôn á 💖✨";
+      typeWriter(message, apology, 40);
+
+      // Thả emoji rơi
+      for (let i = 0; i < 30; i++) {
+        let emoji = document.createElement("div");
+        emoji.classList.add("falling");
+        emoji.innerHTML = Math.random() > 0.5 ? "💖" : "✨";
+        emoji.style.left = Math.random() * 100 + "vw";
+        emoji.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        document.body.appendChild(emoji);
+
+        setTimeout(() => {
+          emoji.remove();
+        }, 5000);
+      }
+
+      // Bắn pháo hoa ở giữa màn hình
+      setTimeout(()=> createFirework(window.innerWidth/2, window.innerHeight/2), 1500);
+    }
+  </script>
+</body>
+</html>
